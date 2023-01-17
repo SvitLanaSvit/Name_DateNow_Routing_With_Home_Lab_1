@@ -27,7 +27,7 @@ app.Map("home/date", (context) =>
 app.Map("home/list", (context) =>
 {
     StringBuilder sb = new StringBuilder();
-    sb.AppendLine($"<ul><li>Coffee</li><li>Tee</li><li>Milch</li></ul>");
+    sb.AppendLine($"<ul><li>show firstname and lastname</li><li>show current date</li><li>show list</li></ul>");
     context.Response.Headers.Add("Content-Type", "text/html;charset=utf-8");
     return context.Response.WriteAsync(sb.ToString());
 });
