@@ -10,19 +10,23 @@ app.MapGet("home/info", (context) =>
     if (context.Request.Query.ContainsKey("firstname"))
     {
         string firstname = context.Request.Query["firstname"];
-        b.AppendLine($"<div>Firstname: {firstname}</div>");
+        b.AppendLine($"<div style='color: green; font-size: 18px'>Firstname: {firstname}</div>");
     }
     if (context.Request.Query.ContainsKey("lastname"))
     {
         string lastname = context.Request.Query["lastname"];
-        b.AppendLine($"<div>Lastname: {lastname}</div>");
+        b.AppendLine($"<div style='color: green; font-size: 18px'>Lastname: {lastname}</div>");
     }
     return context.Response.WriteAsync(b.ToString());
 });
 app.Map("home/date", (context) =>
 {
+    StringBuilder sb = new StringBuilder();
     string date = DateTime.Now.ToString("dd/MM/yyyy");
-    return context.Response.WriteAsync(date);   
+    context.Response.Headers.ContentType = "text/html; charset=utf-8";
+    sb.AppendLine($"<h2 style='color: navy;'>Name of application: {app.Environment.ApplicationName}</h2>");
+    sb.AppendLine($"<h2>{date}</h2>");
+    return context.Response.WriteAsync(sb.ToString());   
 });
 app.Map("home/list", (context) =>
 {
@@ -31,6 +35,10 @@ app.Map("home/list", (context) =>
     context.Response.Headers.Add("Content-Type", "text/html;charset=utf-8");
     return context.Response.WriteAsync(sb.ToString());
 });
-app.Map("home/", () => "Start");
+app.Map("home/", (context) =>
+{
+    context.Response.Headers.ContentType = "text/html; charset=utf-8";
+    return context.Response.WriteAsync("<h2 style='color: navy;'>Start</h2>");
+});
 
 app.Run();
